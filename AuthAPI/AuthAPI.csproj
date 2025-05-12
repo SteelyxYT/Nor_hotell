@@ -15,7 +15,6 @@
     <Folder Include="application\use_cases\" />
     <Folder Include="infrastructure\db\" />
     <Folder Include="infrastructure\frameworks\" />
-    <Folder Include="interfaces\routes\" />
   </ItemGroup>
 
 </Project>
