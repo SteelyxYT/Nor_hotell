@@ -23,8 +23,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
 UserRoutes.Route(app);
 
 app.Run();
