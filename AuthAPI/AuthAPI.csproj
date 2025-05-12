@@ -12,9 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="application\repository_interfaces\" />
     <Folder Include="application\use_cases\" />
-    <Folder Include="infrastructure\db\" />
     <Folder Include="infrastructure\frameworks\" />
   </ItemGroup>
 
