@@ -10,7 +10,7 @@ namespace AuthAPI.domain.entities
         public string password { get; }
         public Timestamp createdAt { get; }
 
-        public User(string username, string password, string email)
+        public User(string username, string password, string email, Timestamp? createdAt, string? id)
         {
 
             if (!email.Contains("@"))
@@ -18,13 +18,26 @@ namespace AuthAPI.domain.entities
                 throw new ArgumentException("Invalid email/does not contain @");
             }
 
-            this.id = new Random().ToString().Substring(2, 9);
+            if (id != null)
+            {
+                this.id = id;
+            }
+            else
+            {
+                this.id = new Random().ToString().Substring(2, 9);
+            }
 
             this.username = username;
             this.email = email;
             this.password = password;
 
-            this.createdAt = new Timestamp();
+            if (createdAt != null)
+            {
+                this.createdAt = createdAt;
+            } else
+            {
+                this.createdAt = new Timestamp();
+            }
         }
     }
 }
