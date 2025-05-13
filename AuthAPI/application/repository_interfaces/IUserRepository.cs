@@ -1,14 +1,11 @@
-﻿using System.Xml.Linq;
+﻿using AuthAPI.domain.entities;
 
 namespace AuthAPI.application.repository_interfaces
 {
     public interface IUserRepository
     {
-        public Save()
-        {
-            throw new NotImplementedException();
-        }
+        Task save(User user);
 
-        public findByUsername
+        Task<User?> findByUsername(string username);
     }
 }

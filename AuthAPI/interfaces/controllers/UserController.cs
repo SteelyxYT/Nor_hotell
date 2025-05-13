@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AuthAPI.application.use_cases;
+using AuthAPI.domain.entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AuthAPI.interfaces.controllers
 {
@@ -6,22 +8,42 @@ namespace AuthAPI.interfaces.controllers
     [Route("api/v1/users")]
     public class UserController: ControllerBase
     {
-        [HttpPost("register")]
-        public IActionResult register()
+        private readonly RegisterUser registerUserUseCase;
+        private readonly GetUserProfile getUserProfileUseCase;
+
+        public UserController(RegisterUser registerUserUseCase, GetUserProfile getUserProfileUseCase)
         {
-            return Ok("register");
+            this.registerUserUseCase = registerUserUseCase;
+            this.getUserProfileUseCase = getUserProfileUseCase;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult getProfile(int id)
+        [HttpPost]
+        public async Task<IActionResult> register([FromBody] Register RegistrationForm)
         {
-            return Ok("getProfile");
+            try
+            {
+                User? user = await registerUserUseCase.execute(RegistrationForm.username, RegistrationForm.password, RegistrationForm.email);
+                return StatusCode(201, user);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, e.Message);
+            }
         }
 
-        [HttpGet]
-        public IActionResult getProfiles()
+
+        [HttpGet("profile/{username}")]
+        public async Task<IActionResult> getProfile(string username)
         {
-            return Ok("getProfiles");
+            try
+            {
+                User? user = await getUserProfileUseCase.execute(username);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, e.Message);
+            }
         }
     }
 }

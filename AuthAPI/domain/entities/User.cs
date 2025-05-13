@@ -1,21 +1,30 @@
-﻿namespace AuthAPI.domain.entities
+﻿using Google.Protobuf.WellKnownTypes;
+
+namespace AuthAPI.domain.entities
 {
     public class User
     {
-        public int id { get; }
+        public string id { get; }
         public string username { get; }
         public string email { get; }
         public string password { get; }
+        public Timestamp createdAt { get; }
 
-        public string role { get; }
-
-        public User(int id, string username, string email, string password, string role)
+        public User(string username, string password, string email)
         {
-            this.id = id;
+
+            if (!email.Contains("@"))
+            {
+                throw new ArgumentException("Invalid email/does not contain @");
+            }
+
+            this.id = new Random().ToString().Substring(2, 9);
+
             this.username = username;
             this.email = email;
             this.password = password;
-            this.role = role;
+
+            this.createdAt = new Timestamp();
         }
     }
 }
